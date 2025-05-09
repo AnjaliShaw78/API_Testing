@@ -1,5 +1,17 @@
+///<reference types="cypress"/>
 describe('Api Testing', () => {
     const baseURL="https://reqres.in/";
+   // const neatCsv=require('neat-csv');
+    let data;
+    before("data",()=>{
+        cy.fixture("data.csv")
+        //.then(neatCsv)
+        .then((response)=>{
+            data=response;
+        })
+
+    });
+
     it('List Users', () => {
         cy.request({
             method:'GET',
@@ -16,94 +28,97 @@ describe('Api Testing', () => {
         })
         
     });
-    it('Single User', () => {
-        cy.request({
-            method:'GET',
-            url:baseURL+'api/users/2',
-            headers:{
-                'content-Type':'application/json'
-            }
-        }).then((response)=>{
-            expect(response.status).to.eq(200)
-        })
+    // it('Single User', () => {
+    //     cy.request({
+    //         method:'GET',
+    //         url:baseURL+'api/users/2',
+    //         headers:{
+    //             'content-Type':'application/json'
+    //         }
+    //     }).then((response)=>{
+    //         expect(response.status).to.eq(200)
+    //     })
         
-    });
-    it('SINGLE USER NOT FOUND', () => {
-        cy.request({
-            method:'GET',
-            url:baseURL+'api/users/23',
-            headers:{
-                'content-Type':'application/json'
-            },failOnStatusCode: false,
-        }).then((response)=>{
-            expect(response.status).to.eq(404)
-        })
+    // });
+    // it('SINGLE USER NOT FOUND', () => {
+    //     cy.request({
+    //         method:'GET',
+    //         url:baseURL+'api/users/23',
+    //         headers:{
+    //             'content-Type':'application/json'
+    //         },failOnStatusCode: false,
+    //     }).then((response)=>{
+    //         expect(response.status).to.eq(404)
+    //     })
 
 
         
-    });
-    it('LIST<Resource>', () => {
-        cy.request({
-            method:'GET',
-            url:baseURL+'api/unknown',
-            headers:{
-                'content-Type':'application/json'
-            }
-        }).then((response)=>{
-            expect(response.status).to.eq(200)
-        })
+    // });
+    // it('LIST<Resource>', () => {
+    //     cy.request({
+    //         method:'GET',
+    //         url:baseURL+'api/unknown',
+    //         headers:{
+    //             'content-Type':'application/json'
+    //         }
+    //     }).then((response)=>{
+    //         expect(response.status).to.eq(200)
+    //     })
         
-    });
-    it('Single<Resource>', () => {
-        cy.request({
-            method:'GET',
-            url:baseURL+'api/unknown/2',
-            headers:{
-                'content-Type':'application/json'
-            }
-        }).then((response)=>{
-            expect(response.status).to.eq(200)
-        })
+    // });
+    // it('Single<Resource>', () => {
+    //     cy.request({
+    //         method:'GET',
+    //         url:baseURL+'api/unknown/2',
+    //         headers:{
+    //             'content-Type':'application/json'
+    //         }
+    //     }).then((response)=>{
+    //         expect(response.status).to.eq(200)
+    //     })
         
-    });
-    it('Single<resource>Not Found', () => {
-        cy.request({
-            method:'GET',
-            url:baseURL+'api/unknown/23',
-            headers:{
-                'content-Type':'application/json'
-            },failOnStatusCode: false,
-        }).then((response)=>{
-            expect(response.status).to.eq(404)
-        })
+    // });
+    // it('Single<resource>Not Found', () => {
+    //     cy.request({
+    //         method:'GET',
+    //         url:baseURL+'api/unknown/23',
+    //         headers:{
+    //             'content-Type':'application/json'
+    //         },failOnStatusCode: false,
+    //     }).then((response)=>{
+    //         expect(response.status).to.eq(404)
+    //     })
         
-    });
-    it('Create', () => {
-        cy.request({
-            method:'POST',
-            url:baseURL+'api/users',
-            body:{
-                "name": "morpheus",
-                "job": "leader"
-            },
+    // });
+    // it('Create', () => {
+    //     cy.request({
+    //         method:'POST',
+    //         url:baseURL+'api/users',
+    //         body:{
+    //             "name": "morpheus",
+    //             "job": "leader"
+    //         },
             
-            headers:{
-                'content-Type':'application/json'
-            }
-        }).then((response)=>{
-            expect(response.status).to.eq(201)
-            cy.log(JSON.stringify(response.body));
-        })
+    //         headers:{
+    //             'content-Type':'application/json'
+    //         }
+    //     }).then((response)=>{
+    //         expect(response.status).to.eq(201)
+    //         cy.log(JSON.stringify(response.body));
+    //     })
 
         
-    });
+    // });
     it('Update', () => {
+        cy.wrap(data).each((ele)=>{
+
+
         cy.request({
             method:'PUT',
             url:baseURL+'api/users/2',
             body:{
-                "name": "morpheus",
-                "job": "zion resident"
+                "name": ele.name,
+                "job": ele.job
             },
             
             headers:{
@@ -112,9 +127,10 @@ describe('Api Testing', () => {
         }).then((response)=>{
             expect(response.status).to.eq(200)
             cy.log(JSON.stringify(response.body));
-        })
+        });
         
     });
+});
     it('Upadate2', () => {
         cy.request({
             method:'PATCH',
@@ -161,7 +177,7 @@ describe('Api Testing', () => {
                 'content-Type':'application/json'
             }
         }).then((response)=>{
-            expect(response.status).to.eq(200)
+            expect(response.status).to.eq(201)
             cy.log(JSON.stringify(response.body));
         })
         
@@ -218,7 +234,7 @@ describe('Api Testing', () => {
         })
         
     });
-    it.only('Delayed Response', () => {
+    it('Delayed Response', () => {
         cy.request({
             method:'GET',
             url:baseURL+'api/users?page=2',

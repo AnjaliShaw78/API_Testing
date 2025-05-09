@@ -42,7 +42,7 @@ describe('API Testing2', () => {
         })
         
     });
-    it.only('Delete a post', () => {
+    it('Delete a post', () => {
         cy.request({
             method:'DELETE',
             url:baseURL+'posts/1',

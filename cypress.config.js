@@ -6,6 +6,6 @@ async function setupNodeEvents(on, config) {
 module.exports = defineConfig({
   e2e: {
   setupNodeEvents,
-  specPattern:'cypress/Integration/Test/api_tests.spes.js'  
+  specPattern:'cypress/Integration/**/*.js'  
   },
 });
