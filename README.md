@@ -38,7 +38,7 @@ The project follows a structured approach to API testing with assertions for sta
 ```
 ## 📂 Project Structure
 
-```
+```text
 .
 ├── cypress/
 │   ├── Integration/
@@ -59,9 +59,6 @@ The project follows a structured approach to API testing with assertions for sta
 ├── package-lock.json
 └── README.md
 ```
-```
-
----
 
 ## 🔍 Test Scenarios
 
