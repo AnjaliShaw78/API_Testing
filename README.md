@@ -38,7 +38,7 @@ The project follows a structured approach to API testing with assertions for sta
 ```
 ## 📂 Project Structure
 
-```text
+```
 .
 ├── cypress/
 │   ├── Integration/
