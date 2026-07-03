@@ -36,16 +36,29 @@ The project follows a structured approach to API testing with assertions for sta
 ## 📂 Project Structure
 
 ```
-cypress/
- ├── e2e/
- │    └── SimpleBooksAPI.cy.js
- ├── fixtures/
- ├── support/
- ├── screenshots/
- ├── videos/
-cypress.config.js
-package.json
-README.md
+## 📂 Project Structure
+
+```text
+.
+├── cypress/
+│   ├── Integration/
+│   ├── e2e/
+│   ├── fixtures/
+│   │   ├── clients.csv
+│   │   ├── data.csv
+│   │   ├── example.json
+│   │   └── orders.csv
+│   └── support/
+│       ├── PageObject/
+│       │   ├── POM_API.js
+│       │   └── POM_reqre.js
+│       ├── commands.js
+│       └── e2e.js
+├── cypress.config.js
+├── package.json
+├── package-lock.json
+└── README.md
+```
 ```
 
 ---
